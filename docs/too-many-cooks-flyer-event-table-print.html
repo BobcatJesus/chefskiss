@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chefskiss Event Table Flyer</title>
+  <style>
+    @page { size: Letter; margin: 0.5in; }
+
+    :root {
+      --ink: #0f172a;
+      --paper: #ffffff;
+      --muted: #475569;
+      --accent: #be123c;
+      --accent2: #0369a1;
+      --line: #fbcfe8;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Arial Narrow", "Franklin Gothic Medium", sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(135deg, #fff1f2 0%, #f0f9ff 40%, #fff 100%),
+        repeating-linear-gradient(0deg, rgba(3, 105, 161, 0.04) 0px, rgba(3, 105, 161, 0.04) 2px, transparent 2px, transparent 14px);
+    }
+
+    .sheet {
+      max-width: 8.5in;
+      margin: 16px auto;
+      border-radius: 24px;
+      overflow: hidden;
+      background: var(--paper);
+      border: 2px solid #fecdd3;
+      box-shadow: 0 18px 50px rgba(15, 23, 42, 0.12);
+    }
+
+    .hero {
+      padding: 24px 28px;
+      background:
+        radial-gradient(circle at right top, rgba(190, 18, 60, 0.15) 0%, transparent 44%),
+        radial-gradient(circle at left bottom, rgba(3, 105, 161, 0.16) 0%, transparent 52%),
+        #fff;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 7px 11px;
+      border-radius: 999px;
+      border: 1px solid #fda4af;
+      color: #9f1239;
+      background: #fff1f2;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 14px 0 6px;
+      font-size: 46px;
+      line-height: 0.96;
+      letter-spacing: -0.03em;
+    }
+
+    .sub {
+      margin: 0;
+      max-width: 590px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.45;
+    }
+
+    .burst {
+      margin-top: 6px;
+      align-self: center;
+      font-size: 13px;
+      font-weight: 800;
+      color: #0c4a6e;
+      border: 2px dashed #7dd3fc;
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: #f0f9ff;
+      transform: rotate(-4deg);
+    }
+
+    .content {
+      padding: 20px 28px 28px;
+      display: grid;
+      grid-template-columns: 1fr 220px;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .left {
+      display: grid;
+      gap: 12px;
+    }
+
+    .card {
+      border: 1px solid #fbcfe8;
+      border-radius: 14px;
+      padding: 14px;
+      background: #fff;
+    }
+
+    .card h2 {
+      margin: 0 0 8px;
+      color: #9f1239;
+      font-size: 19px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .pill {
+      border: 1px solid #bae6fd;
+      border-radius: 12px;
+      padding: 11px;
+      background: #f8fdff;
+    }
+
+    .pill strong {
+      display: block;
+      color: #0c4a6e;
+      margin-bottom: 5px;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+    }
+
+    .pill span {
+      color: #334155;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .right {
+      border: 1px solid #fda4af;
+      border-radius: 16px;
+      padding: 12px;
+      background: linear-gradient(180deg, #fff1f2 0%, #fff 100%);
+      text-align: center;
+    }
+
+    .right h3 {
+      margin: 0 0 8px;
+      color: #9f1239;
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .qr {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 3px solid #fb7185;
+      background: #fff;
+    }
+
+    .right p {
+      margin: 8px 0 0;
+      font-size: 13px;
+      color: #475569;
+      line-height: 1.35;
+      word-break: break-all;
+    }
+
+    .foot {
+      padding: 0 28px 20px;
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    @media (max-width: 820px) {
+      h1 { font-size: 38px; }
+      .content { grid-template-columns: 1fr; }
+      .flow { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .sheet { margin: 0; border-radius: 0; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    const PERMANENT_QR_URL = 'https://too-many-cooks-bobcat.com/?go=app';
+    const PERMANENT_QR_IMAGE = '../assets/qr/app-permanent.png';
+  </script>
+  <article class="sheet">
+    <header class="hero">
+      <div class="row">
+        <div>
+          <span class="tag">Chefskiss Live</span>
+          <h1>Find meals from local cooks</h1>
+          <p class="sub">Scan once, browse instantly, and discover what is cooking nearby.</p>
+        </div>
+        <div class="burst">Scan me now</div>
+      </div>
+    </header>
+
+    <section class="content">
+      <section class="left">
+        <div class="card">
+          <h2>At this table</h2>
+          <p>Get direct access to local cook menus. No complicated setup, just scan and browse.</p>
+        </div>
+
+        <div class="flow">
+          <div class="pill"><strong>1. Scan</strong><span>Open the QR with your phone camera.</span></div>
+          <div class="pill"><strong>2. Browse</strong><span>Search meals, cuisines, and cook profiles.</span></div>
+          <div class="pill"><strong>3. Order</strong><span>Pick what you want for tonight.</span></div>
+        </div>
+
+        <div class="card">
+          <h2>Best for events</h2>
+          <p>Farmers markets, food festivals, community fairs, apartment pop-ups, and launch booths.</p>
+        </div>
+      </section>
+
+      <aside class="right">
+        <h3>Scan here</h3>
+        <img id="qr-image" class="qr" alt="Chefskiss QR code" />
+        <p id="qr-url"></p>
+      </aside>
+    </section>
+
+    <footer class="foot">Print tip: keep at least 0.5 inch margin around the QR block so phones can focus quickly.</footer>
+  </article>
+  <script>
+    const qrImage = document.getElementById('qr-image');
+    const qrUrl = document.getElementById('qr-url');
+
+    if (qrImage) {
+      qrImage.src = PERMANENT_QR_IMAGE;
+    }
+
+    if (qrUrl) {
+      qrUrl.textContent = PERMANENT_QR_URL;
+    }
+  </script>
+</body>
+</html>

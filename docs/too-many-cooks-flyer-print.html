@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chefskiss Flyer</title>
+  <style>
+    :root {
+      --bg: #fff8e7;
+      --paper: #ffffff;
+      --ink: #111827;
+      --muted: #4b5563;
+      --accent: #c2410c;
+      --accent-2: #0f766e;
+      --border: #f7c37a;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #fff8e7 0%, #fff 100%);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 24px auto;
+      padding: 28px;
+    }
+
+    .flyer {
+      background: var(--paper);
+      border: 2px solid var(--border);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    .hero {
+      padding: 34px 34px 26px;
+      background: radial-gradient(circle at top right, #fef3c7 0%, #fff8e7 45%, #ffffff 100%);
+      border-bottom: 1px solid #fde68a;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: #111827;
+      color: #fef3c7;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 16px 0 10px;
+      font-size: 48px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+
+    .subtitle {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.5;
+      color: var(--muted);
+      max-width: 720px;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 18px;
+      padding: 24px 34px 30px;
+    }
+
+    .card {
+      border: 1px solid #f3d19a;
+      border-radius: 18px;
+      padding: 18px;
+      background: #fffdf9;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 18px;
+      color: var(--accent-2);
+    }
+
+    p, li {
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .highlight {
+      background: #fff7ed;
+      border-left: 4px solid var(--accent);
+      padding: 14px;
+      border-radius: 12px;
+      margin-top: 14px;
+      color: var(--ink);
+    }
+
+    .cta {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 14px;
+      align-items: center;
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+      color: #ffffff;
+    }
+
+    .qr {
+      width: 140px;
+      height: 140px;
+      border-radius: 14px;
+      border: 3px solid #fcd34d;
+      background: #ffffff;
+      display: block;
+      object-fit: cover;
+    }
+
+    .cta h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .cta p {
+      margin: 0;
+      color: #e5e7eb;
+      font-size: 14px;
+    }
+
+    .footer {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      padding: 0 34px 34px;
+    }
+
+    .mini {
+      padding: 14px;
+      border-radius: 14px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+    }
+
+    .mini strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+
+    .small {
+      font-size: 12px;
+      color: #6b7280;
+      padding: 0 34px 18px;
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { margin: 0; padding: 0; }
+      .flyer { border: none; border-radius: 0; box-shadow: none; }
+      .content, .footer { break-inside: avoid; }
+      .hero { break-after: avoid; }
+    }
+
+    @media (max-width: 760px) {
+      h1 { font-size: 38px; }
+      .content, .footer { grid-template-columns: 1fr; }
+      .cta { grid-template-columns: 1fr; }
+      .qr { width: 100%; height: 120px; }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    const PERMANENT_QR_URL = 'https://too-many-cooks-bobcat.com/?go=app';
+    const PERMANENT_QR_IMAGE = '../assets/qr/app-permanent.png';
+  </script>
+  <main class="page">
+    <section class="flyer">
+      <header class="hero">
+        <span class="eyebrow">Chefskiss</span>
+        <h1>Local food. Made by cooks nearby.</h1>
+        <p class="subtitle">Find home-cooked meals, browse what’s available tonight, and order from local cooks you can trust.</p>
+      </header>
+
+      <section class="content">
+        <div class="card">
+          <h2>What makes it different</h2>
+          <ul>
+            <li>Meals from real local cooks, not a generic restaurant feed.</li>
+            <li>Search by cuisine, dish, or what you want tonight.</li>
+            <li>Support cooks in your neighborhood.</li>
+            <li>Clear profiles, photos, and trust signals.</li>
+          </ul>
+
+          <div class="highlight">
+            <strong>Craving something specific?</strong>
+            <p>Search for Indian food, Philly cheesesteaks, pasta, tacos, comfort food, and more.</p>
+          </div>
+        </div>
+
+        <aside class="card">
+          <h2>For cooks</h2>
+          <p>Turn your kitchen into a storefront and start sharing meals with people nearby.</p>
+          <h2 style="margin-top:16px;">For customers</h2>
+          <p>Browse what’s available tonight, see photos, and order in a few taps.</p>
+        </aside>
+      </section>
+
+      <section class="content" style="padding-top: 0;">
+        <div class="cta">
+          <img id="qr-image" class="qr" alt="Chefskiss permanent QR code" />
+          <div>
+            <h3>Scan to browse meals tonight</h3>
+            <p>Use your phone to open the marketplace, discover cooks, and see what’s available now.</p>
+            <p id="qr-url" style="margin-top:10px; font-weight:700; color:#fef3c7;"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="footer">
+        <div class="mini">
+          <strong>Step 1</strong>
+          Search for the food you want.
+        </div>
+        <div class="mini">
+          <strong>Step 2</strong>
+          Pick a cook and meal.
+        </div>
+        <div class="mini">
+          <strong>Step 3</strong>
+          Order for tonight.
+        </div>
+      </section>
+
+      <div class="small">Tip: open this file in a browser and use Print to save it as PDF.</div>
+    </section>
+  </main>
+  <script>
+    const qrImage = document.getElementById('qr-image');
+    const qrUrl = document.getElementById('qr-url');
+
+    if (qrImage) {
+      qrImage.src = PERMANENT_QR_IMAGE;
+    }
+
+    if (qrUrl) {
+      qrUrl.textContent = `Live site: ${PERMANENT_QR_URL}`;
+    }
+  </script>
+</body>
+</html>

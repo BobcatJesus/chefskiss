@@ -1,0 +1,9 @@
+[build]
+  command = "npm run export:web"
+  publish = "dist"
+
+[[redirects]]
+  from = "/go/:code"
+  to = "/?go=:code"
+  status = 301
+  force = true

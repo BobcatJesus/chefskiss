@@ -1,0 +1,2 @@
+
+EXPO_PUBLIC_SUPABASE_ANON_KEY=sbp_tadrnzezqilslyjewjnh

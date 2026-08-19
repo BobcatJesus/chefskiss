@@ -1,0 +1,18 @@
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(
+  process.env.EXPO_PUBLIC_SUPABASE_URL,
+  process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY
+);
+
+async function testSupabaseConnection() {
+  const { data, error } = await supabase.from('profiles').select('*').limit(1);
+
+  if (error) {
+    console.log('❌ Supabase connection FAILED:', error.message);
+  } else {
+    console.log('✅ Supabase connection SUCCESS:', data);
+  }
+}
+
+testSupabaseConnection();
