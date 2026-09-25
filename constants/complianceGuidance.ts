@@ -3,7 +3,8 @@ export type ComplianceJurisdiction = 'TX' | 'CA' | 'NY' | 'FL' | 'OTHER';
 export type ComplianceCookType =
   | 'home_kitchen'
   | 'commercial_kitchen'
-  | 'in_home_personal_chef';
+  | 'in_home_personal_chef'
+  | 'hosted_home_dining';
 
 export type ComplianceSuggestion = {
   id: string;
@@ -77,6 +78,21 @@ const PERSONAL_CHEF_SUGGESTIONS: ComplianceSuggestion[] = [
   },
 ];
 
+const HOSTED_HOME_DINING_SUGGESTIONS: ComplianceSuggestion[] = [
+  {
+    id: 'hosted-home-permissions',
+    title: 'Confirm permissions for hosting guests at home',
+    detail: 'Check local zoning, occupancy, insurance, and health-department rules before inviting customers into your home.',
+    severity: 'required',
+  },
+  {
+    id: 'hosted-home-experience',
+    title: 'Define the guest experience',
+    detail: 'Set seating capacity, arrival windows, accessibility notes, and house rules before customers book.',
+    severity: 'recommended',
+  },
+];
+
 const STATE_SUGGESTIONS: Record<ComplianceJurisdiction, ComplianceSuggestion[]> = {
   TX: [
     {
@@ -133,6 +149,10 @@ export function buildComplianceSuggestions(input: GuidanceInput): ComplianceSugg
 
   if (input.cookTypes.includes('in_home_personal_chef')) {
     suggestions.push(...PERSONAL_CHEF_SUGGESTIONS);
+  }
+
+  if (input.cookTypes.includes('hosted_home_dining')) {
+    suggestions.push(...HOSTED_HOME_DINING_SUGGESTIONS);
   }
 
   const seen = new Set<string>();

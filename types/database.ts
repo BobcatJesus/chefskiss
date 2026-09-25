@@ -132,6 +132,9 @@ export type Database = {
           quantity_available: number;
           preorder_notice_hours: number;
           is_published: boolean;
+          is_available_now: boolean;
+          available_until: string | null;
+          current_offer_note: string;
           created_at: string;
           updated_at: string;
         };
@@ -150,6 +153,9 @@ export type Database = {
           quantity_available?: number;
           preorder_notice_hours?: number;
           is_published?: boolean;
+          is_available_now?: boolean;
+          available_until?: string | null;
+          current_offer_note?: string;
           created_at?: string;
           updated_at?: string;
         };
@@ -168,6 +174,9 @@ export type Database = {
           quantity_available?: number;
           preorder_notice_hours?: number;
           is_published?: boolean;
+          is_available_now?: boolean;
+          available_until?: string | null;
+          current_offer_note?: string;
           created_at?: string;
           updated_at?: string;
         };
@@ -391,7 +400,7 @@ export type Database = {
       order_status: 'pending' | 'accepted' | 'declined' | 'ready' | 'completed' | 'canceled';
       service_type: 'prepared_meals' | 'meal_prep' | 'in_home_chef';
       ingredient_model: 'cook_provides' | 'customer_provides' | 'customer_chooses';
-      cook_type: 'home_kitchen' | 'commercial_kitchen' | 'in_home_personal_chef';
+      cook_type: 'home_kitchen' | 'commercial_kitchen' | 'in_home_personal_chef' | 'hosted_home_dining';
     };
     CompositeTypes: Record<string, never>;
   };

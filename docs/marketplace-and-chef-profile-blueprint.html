@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Too Many Cooks | Marketplace and Chef Profile Blueprint</title>
+<style>
+  @page { size: Letter; margin: 0.62in 0.68in 0.65in; }
+  :root { --ink:#17332f; --muted:#53645f; --tomato:#c94f32; --gold:#e5a83b; --mint:#dcefe7; --cream:#fffaf0; --line:#d9e2dc; --dark:#18322e; }
+  * { box-sizing:border-box; }
+  body { margin:0; color:var(--ink); background:white; font-family: Georgia, 'Times New Roman', serif; line-height:1.42; font-size:10.5pt; }
+  h1,h2,h3,h4 { font-family: Arial, Helvetica, sans-serif; letter-spacing:0; line-height:1.12; margin:0; }
+  h1 { font-size:31pt; max-width:620px; }
+  h2 { font-size:19pt; margin:0 0 10px; color:var(--dark); }
+  h3 { font-size:12.5pt; margin:14px 0 5px; color:var(--tomato); }
+  h4 { font-size:10.5pt; margin:9px 0 3px; }
+  p { margin:5px 0 8px; }
+  ul,ol { margin:5px 0 9px 20px; padding:0; }
+  li { margin:3px 0; }
+  .cover { min-height:9.3in; padding:0.4in 0.05in; display:flex; flex-direction:column; justify-content:space-between; page-break-after:always; }
+  .brand { font:700 12pt Arial, sans-serif; text-transform:uppercase; letter-spacing:2px; color:var(--tomato); }
+  .cover-title { margin-top:1.1in; }
+  .cover-title p { font:16pt Arial, sans-serif; color:var(--muted); max-width:560px; margin-top:18px; }
+  .cover-band { background:var(--dark); color:white; padding:18px 21px; border-left:8px solid var(--gold); font:700 13pt Arial, sans-serif; max-width:590px; }
+  .meta { color:var(--muted); font:10pt Arial, sans-serif; }
+  .section { page-break-before:always; }
+  .section.first { page-break-before:auto; }
+  .kicker { font:700 9pt Arial, sans-serif; color:var(--tomato); letter-spacing:1.4px; text-transform:uppercase; margin-bottom:7px; }
+  .lead { font-size:13pt; color:var(--muted); max-width:650px; }
+  .callout { margin:12px 0; padding:12px 14px; background:var(--cream); border:1px solid #f0d59d; border-left:5px solid var(--gold); }
+  .dark-callout { background:var(--dark); color:white; border-left-color:var(--gold); }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:10px 0; }
+  .card { border:1px solid var(--line); border-radius:8px; padding:11px 12px; break-inside:avoid; }
+  .card.mint { background:var(--mint); border-color:#b8d8cb; }
+  .card h3 { margin-top:0; }
+  .pill { display:inline-block; background:var(--mint); border:1px solid #b8d8cb; border-radius:99px; padding:3px 8px; margin:2px 3px 2px 0; font:700 8.5pt Arial, sans-serif; }
+  .priority { display:flex; gap:10px; align-items:flex-start; margin:7px 0; }
+  .num { flex:0 0 23px; height:23px; border-radius:50%; background:var(--tomato); color:white; text-align:center; padding-top:3px; font:700 10pt Arial, sans-serif; }
+  table { width:100%; border-collapse:collapse; margin:8px 0 13px; font-size:9.5pt; }
+  th { text-align:left; background:var(--dark); color:white; padding:7px; font:700 9pt Arial, sans-serif; }
+  td { border-bottom:1px solid var(--line); padding:7px; vertical-align:top; }
+  tr:nth-child(even) td { background:#fbfdfb; }
+  .small { font-size:9pt; color:var(--muted); }
+  .checklist { list-style:none; margin-left:0; }
+  .checklist li::before { content:'□'; color:var(--tomato); font:14pt Arial, sans-serif; margin-right:7px; vertical-align:-1px; }
+  .footer { margin-top:22px; padding-top:8px; border-top:1px solid var(--line); color:var(--muted); font:8.5pt Arial, sans-serif; }
+  .page-note { color:var(--muted); font:8.5pt Arial, sans-serif; }
+</style>
+</head>
+<body>
+<section class="cover">
+  <div>
+    <div class="brand">Too Many Cooks</div>
+    <div class="cover-title">
+      <h1>Marketplace + Chef Profile Blueprint</h1>
+      <p>A practical product and design brief for everything after the customer enters the marketplace: discovery, trust, ordering, and the chef workspace behind it.</p>
+    </div>
+    <div class="cover-band">Customers arrive hungry. They discover a meal first, then the cook and story behind it.</div>
+  </div>
+  <div class="meta">Product direction brief · September 2026<br>Based on the current Expo + Supabase app and the marketplace brainstorm</div>
+</section>
+
+<section class="section first">
+  <div class="kicker">01 · North Star</div>
+  <h2>What the customer experience should do</h2>
+  <p class="lead">The marketplace should help a customer go from “I want something good” to “I know what I’m ordering, who made it, and how I’ll get it” with as little friction as possible.</p>
+  <div class="callout dark-callout"><strong>Core principle:</strong> meals lead the page; cook identity and trust information travel with every meal.</div>
+  <div class="grid">
+    <div class="card mint"><h3>Customer default</h3><p>Customer login opens the marketplace at <strong>/discover</strong>, with search ready immediately.</p></div>
+    <div class="card"><h3>Chef default</h3><p>Chef login opens the existing menu workspace at <strong>/(cook)/meals</strong>. The dashboard remains available, but is secondary.</p></div>
+    <div class="card"><h3>Customer navigation</h3><p>Market, Saved, Orders, Account.</p></div>
+    <div class="card"><h3>Chef navigation</h3><p>My Menu, Orders, Account. Market and Saved stay customer-only.</p></div>
+  </div>
+  <h3>Success looks like</h3>
+  <ul class="checklist">
+    <li>A customer can search by meal, cook, cuisine, or craving.</li>
+    <li>A customer can understand availability, price, pickup/delivery, and next action from a card.</li>
+    <li>A customer can trust a cook through identity, location, cuisine, ratings, and profile story.</li>
+    <li>A chef can publish a dish, manage availability, view orders, and maintain a credible profile.</li>
+    <li>A user with both roles can choose Customer or Chef after sign-in.</li>
+  </ul>
+</section>
+
+<section class="section">
+  <div class="kicker">02 · Marketplace</div>
+  <h2>The customer page</h2>
+  <p class="lead">Make the first screen feel like a lively local food market rather than a database browser.</p>
+  <h3>First viewport</h3>
+  <ol>
+    <li><strong>Warm discovery header:</strong> “What are you craving today?”</li>
+    <li><strong>Primary search:</strong> “Search dishes, cooks, or cuisines.”</li>
+    <li><strong>Location:</strong> a visible city/location selector such as Philadelphia.</li>
+    <li><strong>Availability signal:</strong> “12 cooks nearby” or the current live count.</li>
+    <li><strong>Quick discovery chips:</strong> Comfort food, Weeknight dinner, Vegetarian, Desserts, Meal prep, New this week.</li>
+  </ol>
+  <h3>Mobile order</h3>
+  <div class="grid">
+    <div class="card"><h4>1. Search and location</h4><p>Search is the first action. Location sets realistic results.</p></div>
+    <div class="card"><h4>2. Browse by craving</h4><p>Chips make discovery possible when the customer has a mood, not a dish name.</p></div>
+    <div class="card"><h4>3. Popular near you</h4><p>Lead with meals that are available now and close enough to fulfill.</p></div>
+    <div class="card"><h4>4. Cooks you may like</h4><p>Introduce personality and encourage following.</p></div>
+    <div class="card"><h4>5. Fresh from the kitchen</h4><p>Newly published dishes create a reason to return.</p></div>
+    <div class="card"><h4>6. Followed cooks</h4><p>Personalized repeat behavior for customers who come back.</p></div>
+  </div>
+  <h3>Desktop order</h3>
+  <p>Use a compact filter rail on the left and a meal-first discovery grid on the right. Keep cook details attached to each meal. Move full cook browsing to a dedicated cook profile route instead of making the main page behave like a split database panel.</p>
+</section>
+
+<section class="section">
+  <div class="kicker">03 · Search + Discovery</div>
+  <h2>Make search feel forgiving</h2>
+  <p>The current search model already supports meal names, cook names, cuisines, categories, and distributed matches. The UI should make that power legible.</p>
+  <table>
+    <tr><th>Customer intent</th><th>Search example</th><th>Response</th></tr>
+    <tr><td>Specific dish</td><td>“jollof rice”</td><td>Show matching meals and their cooks.</td></tr>
+    <tr><td>Cuisine</td><td>“Indian food”</td><td>Normalize “food” and match cuisine/category terms.</td></tr>
+    <tr><td>Mood or need</td><td>“spicy dinner”</td><td>Match categories, descriptions, and craving chips.</td></tr>
+    <tr><td>Person</td><td>“Amara”</td><td>Show the cook profile and current menu.</td></tr>
+  </table>
+  <h3>Controls</h3>
+  <p>Use friendly language: <span class="pill">Available now</span> instead of “In stock only.” Allow a clear “Include sold out” alternative. Keep refresh visible but secondary. Show the active query as a removable filter.</p>
+  <h3>Empty, loading, and error states</h3>
+  <div class="grid">
+    <div class="card"><h4>Empty</h4><p>“No cooks found for ‘ramen’ yet. Try tacos, vegetarian, dessert, or meal prep.”</p></div>
+    <div class="card"><h4>Loading</h4><p>Use skeleton meal and cook cards rather than a single “Loading marketplace...” line.</p></div>
+    <div class="card"><h4>Offline/API error</h4><p>“We couldn’t refresh the market. Your last results are still here.” Offer retry.</p></div>
+    <div class="card"><h4>Preview data</h4><p>Keep demo data useful in development, but label it clearly and never present it as live inventory.</p></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="kicker">04 · Meal Cards</div>
+  <h2>The conversion surface</h2>
+  <p class="lead">Every meal card should answer the customer’s practical questions before they tap.</p>
+  <div class="callout"><strong>Card anatomy:</strong> real food image · meal name · cook name · location · short description · price · availability · fulfillment timing · primary action.</div>
+  <h3>Example</h3>
+  <div class="card mint"><h3>Jollof Rice <span style="float:right; color:#17332f;">$18</span></h3><p><strong>Amara Kitchen</strong> · Philadelphia</p><p>Smoky tomato rice, plantains, and grilled chicken.</p><p><span class="pill">8 available</span><span class="pill">Pickup today</span></p><p><strong>Primary action:</strong> View meal</p></div>
+  <h3>What to build next</h3>
+  <ul class="checklist">
+    <li>Use real meal photography as the dominant visual whenever a photo exists.</li>
+    <li>Add a clear “View meal” action that leads to the existing meal detail and checkout path.</li>
+    <li>Expose pickup, cook delivery, or platform delivery in plain language.</li>
+    <li>Show quantity and timing without making the card feel like inventory software.</li>
+    <li>Keep follow and full-menu actions on the cook surface, not competing with the meal purchase action.</li>
+  </ul>
+</section>
+
+<section class="section">
+  <div class="kicker">05 · Cook Identity</div>
+  <h2>The chef profile</h2>
+  <p class="lead">The chef profile is the trust layer. Customers are choosing a kitchen, not only a menu item.</p>
+  <h3>Profile header</h3>
+  <div class="grid">
+    <div class="card"><h4>Identity</h4><p>Cook name, profile image or kitchen image, verification badge, rating, review count.</p></div>
+    <div class="card"><h4>Place</h4><p>City or neighborhood, fulfillment radius, pickup/delivery options.</p></div>
+    <div class="card"><h4>Point of view</h4><p>Short bio, cuisines, cooking style, and what makes this kitchen distinct.</p></div>
+    <div class="card"><h4>Proof</h4><p>Completed orders, repeat customer rate, food-safety badge, and transparent new-cook status.</p></div>
+  </div>
+  <h3>Profile actions</h3>
+  <p><strong>View menu</strong> should be the primary action. <strong>Follow cook</strong> is secondary and should update immediately. A customer should also be able to browse the cook’s public menu, view a meal, and return to the marketplace without losing their search context.</p>
+  <h3>Voice</h3>
+  <p>Keep the writing human and specific. “Small-batch meals with big Sunday-dinner energy” is more persuasive than “high-quality food service.”</p>
+</section>
+
+<section class="section">
+  <div class="kicker">06 · Chef Workspace</div>
+  <h2>The chef profile and menu builder</h2>
+  <p class="lead">Chef login should open My Menu. The existing dashboard remains useful, but the chef’s first job is to make something customers can buy.</p>
+  <h3>Chef navigation</h3>
+  <div class="grid">
+    <div class="card mint"><h3>My Menu</h3><p>Create meals, edit drafts, upload photos, set prices and quantities, publish or hide items, view public menu, share menu link.</p></div>
+    <div class="card"><h3>Orders</h3><p>See new orders, accept or decline, manage ready/completed status, and view customer/order details.</p></div>
+    <div class="card"><h3>Account</h3><p>Chef profile, kitchen identity, city, bio, cuisines, availability, verification, legal/compliance details.</p></div>
+  </div>
+  <h3>Menu item creation</h3>
+  <ol>
+    <li>Title and food photo</li>
+    <li>Description that makes the dish sound good</li>
+    <li>Food categories and cuisine</li>
+    <li>Price and quantity available</li>
+    <li>Service type: prepared meal, meal prep, or in-home chef</li>
+    <li>Fulfillment: pickup, cook delivery, or platform delivery</li>
+    <li>Availability window and lead time</li>
+    <li>Draft, preview, publish, and hide states</li>
+  </ol>
+  <h3>Chef profile completion</h3>
+  <ul class="checklist">
+    <li>Display name and kitchen name</li>
+    <li>Bio, cuisine tags, cook type, and service area</li>
+    <li>Profile image or kitchen image</li>
+    <li>Availability and fulfillment settings</li>
+    <li>Food handler permit and compliance attestations where required</li>
+    <li>Public menu slug and shareable menu link</li>
+  </ul>
+</section>
+
+<section class="section">
+  <div class="kicker">07 · Data + Routes</div>
+  <h2>Functional contracts</h2>
+  <table>
+    <tr><th>Flow</th><th>Expected destination</th><th>Definition of done</th></tr>
+    <tr><td>Customer sign-in</td><td>/(customer)/discover</td><td>Marketplace loads; search and live cooks/meals are usable.</td></tr>
+    <tr><td>Chef sign-in</td><td>/(cook)/meals</td><td>My Menu loads; chef can create, edit, publish, and share.</td></tr>
+    <tr><td>Dual-role sign-in</td><td>/(auth)/choose-profile</td><td>Customer and Chef choices route independently.</td></tr>
+    <tr><td>Meal click</td><td>/meals/[mealId]</td><td>Customer sees detail, availability, and checkout action.</td></tr>
+    <tr><td>Cook click</td><td>/cooks/[cookId] or public menu</td><td>Customer sees identity, trust, menu, and follow state.</td></tr>
+  </table>
+  <h3>Core data the marketplace needs</h3>
+  <p><strong>Cook:</strong> display name, bio, city, cuisines, cook types, verification, ratings, follower count, active state.</p>
+  <p><strong>Meal:</strong> title, description, photo, price, quantity, categories, service type, fulfillment modes, published state, updated time, cook identity.</p>
+  <p><strong>Customer state:</strong> follows, saved meals, recent searches, orders, selected location.</p>
+</section>
+
+<section class="section">
+  <div class="kicker">08 · Build Order</div>
+  <h2>What to focus on next</h2>
+  <div class="priority"><div class="num">1</div><div><strong>Lock the role flows.</strong><br><span class="small">Customer → marketplace. Chef → My Menu. Dual role → chooser.</span></div></div>
+  <div class="priority"><div class="num">2</div><div><strong>Make the marketplace meal-first.</strong><br><span class="small">Improve cards, images, availability, location, and the View meal action.</span></div></div>
+  <div class="priority"><div class="num">3</div><div><strong>Finish the chef profile and menu loop.</strong><br><span class="small">A chef must be able to represent their kitchen, publish a dish, and see the public result.</span></div></div>
+  <div class="priority"><div class="num">4</div><div><strong>Make search and empty states feel intentional.</strong><br><span class="small">Customers should never be confused by zero results, loading, sold-out items, or API errors.</span></div></div>
+  <div class="priority"><div class="num">5</div><div><strong>Only then add polish.</strong><br><span class="small">Motion, typography, photography, refined spacing, and responsive desktop composition.</span></div></div>
+  <h3>Acceptance checklist</h3>
+  <ul class="checklist">
+    <li>Customer can search by dish, cuisine, cook, or craving.</li>
+    <li>Customer can filter available meals and understand fulfillment.</li>
+    <li>Customer can follow a cook and browse that cook’s menu.</li>
+    <li>Customer can open meal detail and continue toward checkout.</li>
+    <li>Chef can create and publish a meal with complete information.</li>
+    <li>Chef can edit, hide, and share a public menu.</li>
+    <li>Chef can view orders and update order status.</li>
+    <li>Customer and chef navigation never expose the wrong role’s primary tabs.</li>
+  </ul>
+  <div class="footer">This blueprint is intentionally product-focused. It describes the experience to build on top of the existing Expo Router, Supabase Auth, meals, profiles, follows, orders, and storage foundations.</div>
+</section>
+</body>
+</html>

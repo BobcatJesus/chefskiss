@@ -1,4 +1,4 @@
-# Chefskiss Site Flowchart
+# Too Many Cooks Site Flowchart
 
 ## Customer Flow
 ```mermaid

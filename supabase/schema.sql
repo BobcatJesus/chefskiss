@@ -42,7 +42,7 @@ $$;
 do $$
 begin
   if not exists (select 1 from pg_type where typname = 'cook_type') then
-    create type cook_type as enum ('home_kitchen', 'commercial_kitchen', 'in_home_personal_chef');
+    create type cook_type as enum ('home_kitchen', 'commercial_kitchen', 'in_home_personal_chef', 'hosted_home_dining');
   end if;
 end
 $$;
@@ -102,6 +102,9 @@ create table if not exists public.meals (
   quantity_available integer not null default 1 check (quantity_available >= 0),
   preorder_notice_hours integer not null default 24 check (preorder_notice_hours >= 0),
   is_published boolean not null default false,
+  is_available_now boolean not null default false,
+  available_until timestamptz,
+  current_offer_note text not null default '',
   created_at timestamptz not null default timezone('utc', now()),
   updated_at timestamptz not null default timezone('utc', now()),
   check (offers_pickup or offers_cook_delivery or offers_platform_delivery)

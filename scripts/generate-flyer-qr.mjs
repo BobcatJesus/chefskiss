@@ -4,7 +4,7 @@ import QRCode from 'qrcode';
 
 const outputDir = path.resolve(process.cwd(), 'assets', 'qr');
 
-const FLYER_DOMAIN = 'https://chefskissbobcat.com';
+const FLYER_DOMAIN = 'https://too-many-cooks-bobcat.com';
 
 fs.mkdirSync(outputDir, { recursive: true });
 

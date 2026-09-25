@@ -1,4 +1,4 @@
-# Chefskiss Architecture
+# Too Many Cooks Architecture
 
 ## Product Constraint For V1
 
@@ -20,7 +20,7 @@
 ## Folder Structure
 
 ```txt
-chefskiss/
+toomanycooks/
   app/
     _layout.tsx
     index.tsx
@@ -305,4 +305,4 @@ Build just these screens and endpoints first:
 - Create order
 - Accept order
 
-That is the first usable version of Chefskiss.
+That is the first usable version of Too Many Cooks.

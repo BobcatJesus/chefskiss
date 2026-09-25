@@ -1,0 +1,1 @@
+alter type public.cook_type add value if not exists 'hosted_home_dining';

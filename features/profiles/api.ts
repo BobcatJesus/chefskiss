@@ -154,12 +154,13 @@ export type FoodHandlerPermitUploadInput = {
   webFile?: Blob | null;
 };
 
-export type CookType = 'home_kitchen' | 'commercial_kitchen' | 'in_home_personal_chef';
+export type CookType = 'home_kitchen' | 'commercial_kitchen' | 'in_home_personal_chef' | 'hosted_home_dining';
 
 const ALLOWED_COOK_TYPES: ReadonlyArray<CookType> = [
   'home_kitchen',
   'commercial_kitchen',
   'in_home_personal_chef',
+  'hosted_home_dining',
 ];
 
 export type FollowOfferEventRecord = {

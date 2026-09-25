@@ -180,19 +180,32 @@ export default function CookMenuScreen() {
         ListHeaderComponent={
           <>
             <View style={styles.heroCard}>
-              <Text style={styles.eyebrow}>Public Menu</Text>
+              <Text style={styles.eyebrow}>From the kitchen of</Text>
               <Text style={styles.title}>{cook?.display_name || 'Cook menu'}</Text>
               <Text style={styles.subtitle}>{cook?.city || 'Loading city...'}</Text>
+              {cook?.bio ? <Text style={styles.bio}>{cook.bio}</Text> : null}
+              {cook?.cuisines?.length ? (
+                <View style={styles.cuisineRow}>
+                  {cook.cuisines.slice(0, 4).map((cuisine) => (
+                    <Text key={cuisine} style={styles.cuisinePill}>{cuisine}</Text>
+                  ))}
+                </View>
+              ) : null}
               {menuSummary.count > 0 ? (
                 <Text style={styles.heroMeta}>
                   {menuSummary.count} dishes · ${((menuSummary.minPrice || 0) / 100).toFixed(2)} to ${((menuSummary.maxPrice || 0) / 100).toFixed(2)}
                 </Text>
               ) : null}
+              {cook ? (
+                <Link href={`/cooks/${cook.id}/now`} style={styles.nowLink}>
+                  See what’s making now
+                </Link>
+              ) : null}
             </View>
 
             <View style={styles.adCard}>
-              <Text style={styles.adTitle}>Pick a dish and order fast</Text>
-              <Text style={styles.adBody}>Every item here is live and ready to book. Choose your meal and checkout in a few taps.</Text>
+              <Text style={styles.adTitle}>Made in small batches</Text>
+              <Text style={styles.adBody}>Choose a dish below to see availability, fulfillment options, and checkout details.</Text>
             </View>
 
             {publicMenuUrl ? (
@@ -246,6 +259,10 @@ export default function CookMenuScreen() {
               </View>
               <Text style={styles.cardMeta}>Qty {item.quantity_available}</Text>
               <Text style={styles.cardMeta}>Service: {serviceLabel(item.service_type)}</Text>
+              <View style={styles.fulfillmentRow}>
+                {item.offers_pickup ? <Text style={styles.fulfillmentPill}>Pickup</Text> : null}
+                {item.offers_cook_delivery ? <Text style={styles.fulfillmentPill}>Delivery</Text> : null}
+              </View>
               <Text style={styles.cta}>Choose this dish</Text>
             </Pressable>
           </Link>
@@ -267,9 +284,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   heroCard: {
-    borderRadius: 18,
-    padding: 16,
-    backgroundColor: '#0f172a',
+    borderRadius: 24,
+    padding: 20,
+    backgroundColor: '#17332f',
   },
   eyebrow: {
     color: '#fcd34d',
@@ -290,10 +307,39 @@ const styles = StyleSheet.create({
     color: '#cbd5e1',
     fontSize: 15,
   },
+  bio: {
+    marginTop: 12,
+    maxWidth: 620,
+    color: '#e2e8f0',
+    fontSize: 15,
+    lineHeight: 21,
+  },
+  cuisineRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+    marginTop: 12,
+  },
+  cuisinePill: {
+    borderRadius: 999,
+    backgroundColor: '#28524b',
+    paddingHorizontal: 9,
+    paddingVertical: 5,
+    color: '#d9f8eb',
+    fontSize: 12,
+    fontWeight: '800',
+    overflow: 'hidden',
+  },
   heroMeta: {
     marginTop: 10,
     color: '#fef3c7',
     fontWeight: '700',
+  },
+  nowLink: {
+    alignSelf: 'flex-start',
+    marginTop: 13,
+    color: '#d9f8eb',
+    fontWeight: '800',
   },
   adCard: {
     marginTop: 10,
@@ -418,15 +464,15 @@ const styles = StyleSheet.create({
   },
   card: {
     borderWidth: 1,
-    borderColor: '#fed7aa',
-    borderRadius: 12,
+    borderColor: '#e6d8c4',
+    borderRadius: 16,
     padding: 12,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#fffdf8',
   },
   cardPhoto: {
     width: '100%',
-    height: 180,
-    borderRadius: 10,
+    height: 210,
+    borderRadius: 12,
     marginBottom: 10,
     backgroundColor: '#e2e8f0',
   },
@@ -456,6 +502,22 @@ const styles = StyleSheet.create({
     marginTop: 6,
     color: '#475569',
     fontSize: 14,
+  },
+  fulfillmentRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+    marginTop: 10,
+  },
+  fulfillmentPill: {
+    borderRadius: 999,
+    backgroundColor: '#e6f4ef',
+    color: '#286052',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    fontSize: 12,
+    fontWeight: '800',
+    overflow: 'hidden',
   },
   cta: {
     marginTop: 10,

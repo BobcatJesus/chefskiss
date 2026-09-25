@@ -1,6 +1,6 @@
-# Chefskiss MVP
+# Too Many Cooks MVP
 
-Chefskiss is a marketplace for independent home chefs. The first product goal is narrow:
+Too Many Cooks is a marketplace for independent home chefs. The first product goal is narrow:
 
 One cook can create a profile, publish a meal, set availability, and another user can place a scheduled pickup order.
 

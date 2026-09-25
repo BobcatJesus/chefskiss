@@ -24,10 +24,11 @@ import {
 
 type SlugStatus = 'idle' | 'checking' | 'available' | 'unavailable' | 'current';
 
-const COOK_TYPE_OPTIONS: Array<{ value: CookType; label: string }> = [
-  { value: 'home_kitchen', label: 'Home kitchen' },
-  { value: 'commercial_kitchen', label: 'Commercial kitchen' },
-  { value: 'in_home_personal_chef', label: 'In-home personal chef' },
+const COOK_TYPE_OPTIONS: Array<{ value: CookType; label: string; description: string }> = [
+  { value: 'in_home_personal_chef', label: "Private chef at the customer's home", description: 'You travel to the customer and cook in their kitchen.' },
+  { value: 'commercial_kitchen', label: 'Meals from a commercial kitchen', description: 'You prepare meals in a licensed or shared professional kitchen.' },
+  { value: 'home_kitchen', label: 'Meals from my home kitchen', description: 'You cook at home for pickup or an offered delivery service.' },
+  { value: 'hosted_home_dining', label: 'Host guests in my home', description: 'Customers come to your home for a hosted meal or food experience.' },
 ];
 
 const STATE_OPTIONS: Array<{ value: ComplianceJurisdiction; label: string }> = [
@@ -294,10 +295,19 @@ export default function CookProfileScreen() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-      <Text style={styles.title}>Brand & menu link</Text>
-      <Text style={styles.subtitle}>Choose a custom short link customers can remember and share.</Text>
+      <Text style={styles.title}>Chef account</Text>
+      <Text style={styles.subtitle}>Shape your kitchen profile, menu link, and readiness to publish.</Text>
 
-      {profile ? <Text style={styles.kitchenName}>{profile.display_name}</Text> : null}
+      {profile ? (
+        <View style={styles.identitySummary}>
+          <Text style={styles.kitchenName}>{profile.display_name}</Text>
+          <Text style={styles.identityLocation}>{profile.city || 'Add your city'} · {profile.is_active ? 'Visible to customers' : 'Hidden from customers'}</Text>
+          <Text style={styles.identityBio}>{profile.bio || 'Add a short story about your food and kitchen.'}</Text>
+          <Pressable onPress={() => router.push('/(cook)/meals')} style={styles.identityAction}>
+            <Text style={styles.identityActionLabel}>Open My Menu</Text>
+          </Pressable>
+        </View>
+      ) : null}
 
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Required cook profile info</Text>
@@ -374,7 +384,8 @@ export default function CookProfileScreen() {
           style={[styles.input, styles.addressInput]}
         />
 
-        <Text style={styles.label}>Cook type (choose one or more)</Text>
+        <Text style={styles.label}>How do you want to serve customers?</Text>
+        <Text style={styles.helper}>Choose every offering you plan to provide. These options shape your compliance checklist and customer-facing profile.</Text>
         <View style={styles.optionRow}>
           {COOK_TYPE_OPTIONS.map((option) => {
             const isSelected = cookTypes.includes(option.value);
@@ -386,6 +397,7 @@ export default function CookProfileScreen() {
                 style={[styles.chip, isSelected ? styles.chipActive : null]}
               >
                 <Text style={[styles.chipLabel, isSelected ? styles.chipLabelActive : null]}>{option.label}</Text>
+                <Text style={[styles.optionDescription, isSelected ? styles.optionDescriptionActive : null]}>{option.description}</Text>
               </Pressable>
             );
           })}
@@ -539,6 +551,27 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#92400e',
   },
+  identitySummary: {
+    width: '100%',
+    maxWidth: 720,
+    marginTop: 16,
+    padding: 16,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#bfded6',
+    backgroundColor: '#e6f4ef',
+  },
+  identityLocation: { marginTop: 5, color: '#286052', fontSize: 13, fontWeight: '700' },
+  identityBio: { marginTop: 8, color: '#475569', lineHeight: 20 },
+  identityAction: {
+    alignSelf: 'flex-start',
+    marginTop: 12,
+    borderRadius: 999,
+    backgroundColor: '#17332f',
+    paddingHorizontal: 13,
+    paddingVertical: 8,
+  },
+  identityActionLabel: { color: '#f5f7f2', fontWeight: '800', fontSize: 13 },
   label: {
     marginTop: 14,
     color: '#0f172a',
@@ -580,9 +613,11 @@ const styles = StyleSheet.create({
   chip: {
     borderWidth: 1,
     borderColor: '#d1d5db',
-    borderRadius: 999,
+    borderRadius: 14,
+    minWidth: 220,
+    maxWidth: 420,
     paddingHorizontal: 10,
-    paddingVertical: 7,
+    paddingVertical: 10,
     backgroundColor: '#ffffff',
   },
   chipActive: {
@@ -596,6 +631,15 @@ const styles = StyleSheet.create({
   },
   chipLabelActive: {
     color: '#115e59',
+  },
+  optionDescription: {
+    marginTop: 4,
+    color: '#64748b',
+    fontSize: 12,
+    lineHeight: 17,
+  },
+  optionDescriptionActive: {
+    color: '#286052',
   },
   complianceCard: {
     marginTop: 12,

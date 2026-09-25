@@ -19,9 +19,10 @@ const STATE_OPTIONS: Array<{ value: ComplianceJurisdiction; label: string }> = [
 ];
 
 const COOK_TYPE_OPTIONS: Array<{ value: ComplianceCookType; label: string }> = [
-  { value: 'home_kitchen', label: 'Home kitchen' },
-  { value: 'commercial_kitchen', label: 'Commercial kitchen' },
-  { value: 'in_home_personal_chef', label: 'In-home personal chef' },
+  { value: 'in_home_personal_chef', label: "Private chef at the customer's home" },
+  { value: 'commercial_kitchen', label: 'Meals from a commercial kitchen' },
+  { value: 'home_kitchen', label: 'Meals from my home kitchen' },
+  { value: 'hosted_home_dining', label: 'Host guests in my home' },
 ];
 
 export default function LegalAttestationScreen() {

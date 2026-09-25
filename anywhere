@@ -1,0 +1,5 @@
+import { supabase } from '../supabase';
+
+const { data, error } = await supabase
+  .from('recipes')
+  .select('*');

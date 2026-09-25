@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { supabase } from '../../supabaseClient'; // Adjust relative path to your Supabase client
 
 export default function CookOnboardingWizard({ userId, onComplete }) {

@@ -108,6 +108,13 @@ export default function CookDetailScreen() {
               ) : null}
 
               <OutdoorAccent compact />
+              {cook ? (
+                <Link href={`/cooks/${cook.id}/menu`} asChild>
+                  <Pressable style={styles.heroMenuButton}>
+                    <Text style={styles.heroMenuButtonLabel}>Menu</Text>
+                  </Pressable>
+                </Link>
+              ) : null}
             </View>
 
             {isLoading ? <Text style={styles.helper}>Loading cook profile...</Text> : null}
@@ -148,11 +155,6 @@ export default function CookDetailScreen() {
                   <Text style={styles.bioText}>{cook.bio || 'No bio yet.'}</Text>
                   <Text style={styles.meta}>Cuisines: {cook.cuisines.length > 0 ? cook.cuisines.join(', ') : 'Not listed yet'}</Text>
                   <Text style={styles.meta}>Services: {services.length > 0 ? services.join(', ') : 'No active services yet'}</Text>
-                  <Link href={`/cooks/${cook.id}/menu`} asChild>
-                    <Pressable style={styles.menuButton}>
-                      <Text style={styles.menuButtonLabel}>View full menu</Text>
-                    </Pressable>
-                  </Link>
                 </View>
 
                 <Text style={styles.sectionHeading}>Live offers</Text>
@@ -209,6 +211,18 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 12,
   },
+  heroMenuButton: {
+    marginTop: 14,
+    borderRadius: 999,
+    alignItems: 'center',
+    paddingVertical: 10,
+    backgroundColor: '#f59e0b',
+  },
+  heroMenuButtonLabel: {
+    color: '#451a03',
+    fontSize: 14,
+    fontWeight: '800',
+  },
   helper: { marginTop: 12, color: '#475569' },
   error: { marginTop: 12, color: '#b91c1c' },
   fallbackLink: { marginTop: 10, color: '#0f766e', fontWeight: '700' },
@@ -261,20 +275,6 @@ const styles = StyleSheet.create({
   },
   followButtonLabelActive: {
     color: '#fff7ed',
-  },
-  menuButton: {
-    marginTop: 10,
-    borderWidth: 1,
-    borderColor: '#d97706',
-    borderRadius: 999,
-    alignItems: 'center',
-    paddingVertical: 8,
-    backgroundColor: '#fffbeb',
-  },
-  menuButtonLabel: {
-    color: '#b45309',
-    fontSize: 13,
-    fontWeight: '800',
   },
   sectionHeading: {
     marginTop: 14,

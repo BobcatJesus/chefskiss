@@ -19,7 +19,10 @@ function normalizeValue(value: string): string {
 }
 
 function readEnv(key: EnvKey): string | null {
-  const rawValue = process.env[key];
+  const rawValue =
+    key === 'EXPO_PUBLIC_SUPABASE_URL'
+      ? process.env.EXPO_PUBLIC_SUPABASE_URL
+      : process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
   if (!rawValue) {
     return null;
   }

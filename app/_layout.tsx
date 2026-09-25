@@ -1,17 +1,33 @@
 import { useEffect } from 'react';
 
-import { usePathname, Stack, useRouter, useSegments } from 'expo-router';
+import { Stack, usePathname, useRouter, useSegments } from 'expo-router';
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
 import 'react-native-reanimated';
 
 import { AuthProvider, useAuth } from '@/features/auth/hooks';
 import { isSupabaseConfigured } from '@/lib/supabase';
 
+function getSessionRoles(session: any): string[] {
+  const rawRoles = session?.user?.user_metadata?.roles ?? session?.user?.user_metadata?.role;
+
+  if (Array.isArray(rawRoles)) {
+    return rawRoles.filter((value): value is string => typeof value === 'string' && value.length > 0);
+  }
+
+  if (typeof rawRoles === 'string' && rawRoles.trim().length > 0) {
+    return [rawRoles];
+  }
+
+  return ['customer'];
+}
+
 function AuthGate() {
   const router = useRouter();
   const segments = useSegments();
   const pathname = usePathname();
   const { session, isLoading } = useAuth();
+  const customerDefaultRoute = '/(customer)/discover';
+  const chefDefaultRoute = '/(cook)/meals';
 
   useEffect(() => {
     if (isLoading) {
@@ -20,14 +36,22 @@ function AuthGate() {
 
     const firstSegment = segments[0];
     const isAuthRoute = firstSegment === '(auth)';
+    const isPasswordResetRoute = pathname === '/reset-password';
+    const roles = getSessionRoles(session);
+    const targetRoute = roles.includes('chef') ? chefDefaultRoute : customerDefaultRoute;
 
-    if (!session && !isAuthRoute) {
+    if (!session && !isAuthRoute && !isPasswordResetRoute) {
       router.replace('/(auth)/sign-in');
       return;
     }
 
-    if (session && isAuthRoute) {
-      router.replace('/(customer)/discover');
+    if (session && isAuthRoute && !isPasswordResetRoute) {
+      if (roles.length > 1) {
+        router.replace('/(auth)/choose-profile');
+        return;
+      }
+
+      router.replace(targetRoute);
     }
   }, [isLoading, router, segments, session]);
 
@@ -49,7 +73,7 @@ function AuthGate() {
   }
 
   const firstSegment = segments[0];
-  const showGlobalNav = Boolean(session) && firstSegment !== '(auth)';
+  const showGlobalNav = false;
 
   return (
     <View style={styles.appShell}>

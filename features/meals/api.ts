@@ -1,3 +1,4 @@
+import { inferFoodCategories } from '@/features/meals/foodCategories';
 import { ensureCookProfile } from '@/features/profiles/api';
 import { isSupabaseConfigured, supabase } from '@/lib/supabase';
 
@@ -15,7 +16,11 @@ export type MealRecord = {
   price_cents: number;
   quantity_available: number;
   is_published: boolean;
+  is_available_now: boolean;
+  available_until: string | null;
+  current_offer_note: string;
   updated_at: string;
+  food_categories: string[];
 };
 
 export type DiscoverMeal = MealRecord & {
@@ -40,6 +45,9 @@ type SaveMealInput = {
   priceCents: number;
   quantityAvailable: number;
   isPublished: boolean;
+  isAvailableNow?: boolean;
+  availableUntil?: string | null;
+  currentOfferNote?: string;
 };
 
 function toSafeMessage(error: unknown, fallback: string) {
@@ -153,7 +161,11 @@ function normalizeMeal(row: any): MealRecord {
     price_cents: Number(row.price_cents || 0),
     quantity_available: Number(row.quantity_available || 0),
     is_published: Boolean(row.is_published),
+    is_available_now: Boolean(row.is_available_now),
+    available_until: typeof row.available_until === 'string' ? row.available_until : null,
+    current_offer_note: String(row.current_offer_note || ''),
     updated_at: String(row.updated_at || ''),
+    food_categories: inferFoodCategories(String(row.title || ''), String(row.description || '')),
   };
 }
 
@@ -167,7 +179,7 @@ export async function listOwnMeals(): Promise<MealRecord[]> {
 
     const { data, error } = await supabase
       .from('meals')
-      .select('id, cook_profile_id, service_type, ingredient_model, offers_pickup, offers_cook_delivery, offers_platform_delivery, title, description, photo_url, price_cents, quantity_available, is_published, updated_at')
+      .select('id, cook_profile_id, service_type, ingredient_model, offers_pickup, offers_cook_delivery, offers_platform_delivery, title, description, photo_url, price_cents, quantity_available, is_published, is_available_now, available_until, current_offer_note, updated_at')
       .order('updated_at', { ascending: false });
 
     if (error) {
@@ -187,7 +199,7 @@ export async function getMealById(mealId: string): Promise<MealRecord> {
 
   const { data, error } = await supabase
     .from('meals')
-    .select('id, cook_profile_id, service_type, ingredient_model, offers_pickup, offers_cook_delivery, offers_platform_delivery, title, description, photo_url, price_cents, quantity_available, is_published, updated_at')
+    .select('id, cook_profile_id, service_type, ingredient_model, offers_pickup, offers_cook_delivery, offers_platform_delivery, title, description, photo_url, price_cents, quantity_available, is_published, is_available_now, available_until, current_offer_note, updated_at')
     .eq('id', mealId)
     .single();
 
@@ -218,12 +230,15 @@ export async function createMeal(input: SaveMealInput): Promise<MealRecord> {
     price_cents: input.priceCents,
     quantity_available: input.quantityAvailable,
     is_published: input.isPublished,
+    is_available_now: Boolean(input.isAvailableNow),
+    available_until: input.availableUntil ?? null,
+    current_offer_note: input.currentOfferNote?.trim() || '',
   };
 
   const { data, error } = await supabase
     .from('meals')
     .insert(payload)
-    .select('id, cook_profile_id, service_type, ingredient_model, offers_pickup, offers_cook_delivery, offers_platform_delivery, title, description, photo_url, price_cents, quantity_available, is_published, updated_at')
+    .select('id, cook_profile_id, service_type, ingredient_model, offers_pickup, offers_cook_delivery, offers_platform_delivery, title, description, photo_url, price_cents, quantity_available, is_published, is_available_now, available_until, current_offer_note, updated_at')
     .single();
 
   if (error) {
@@ -260,13 +275,16 @@ export async function updateMeal(mealId: string, input: SaveMealInput): Promise<
     price_cents: input.priceCents,
     quantity_available: input.quantityAvailable,
     is_published: input.isPublished,
+    is_available_now: Boolean(input.isAvailableNow),
+    available_until: input.availableUntil ?? null,
+    current_offer_note: input.currentOfferNote?.trim() || '',
   };
 
   const { data, error } = await supabase
     .from('meals')
     .update(payload)
     .eq('id', mealId)
-    .select('id, cook_profile_id, service_type, ingredient_model, offers_pickup, offers_cook_delivery, offers_platform_delivery, title, description, photo_url, price_cents, quantity_available, is_published, updated_at')
+    .select('id, cook_profile_id, service_type, ingredient_model, offers_pickup, offers_cook_delivery, offers_platform_delivery, title, description, photo_url, price_cents, quantity_available, is_published, is_available_now, available_until, current_offer_note, updated_at')
     .single();
 
   if (error) {
@@ -274,6 +292,20 @@ export async function updateMeal(mealId: string, input: SaveMealInput): Promise<
   }
 
   return normalizeMeal(data);
+}
+
+export async function setMealAvailableNow(mealId: string, isAvailableNow: boolean): Promise<void> {
+  const { error } = await supabase
+    .from('meals')
+    .update({
+      is_available_now: isAvailableNow,
+      available_until: null,
+    })
+    .eq('id', mealId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
 }
 
 export async function setMealPublished(mealId: string, isPublished: boolean): Promise<MealRecord> {
@@ -299,7 +331,7 @@ export async function setMealPublished(mealId: string, isPublished: boolean): Pr
     .from('meals')
     .update({ is_published: isPublished })
     .eq('id', mealId)
-    .select('id, cook_profile_id, service_type, ingredient_model, offers_pickup, offers_cook_delivery, offers_platform_delivery, title, description, photo_url, price_cents, quantity_available, is_published, updated_at')
+    .select('id, cook_profile_id, service_type, ingredient_model, offers_pickup, offers_cook_delivery, offers_platform_delivery, title, description, photo_url, price_cents, quantity_available, is_published, is_available_now, available_until, current_offer_note, updated_at')
     .single();
 
   if (error) {
@@ -317,7 +349,7 @@ export async function listPublishedMeals(): Promise<DiscoverMeal[]> {
   const { data, error } = await supabase
     .from('meals')
     .select(
-      'id, cook_profile_id, service_type, ingredient_model, offers_pickup, offers_cook_delivery, offers_platform_delivery, title, description, photo_url, price_cents, quantity_available, is_published, updated_at, cook_profiles!inner(display_name, city, is_active)'
+      'id, cook_profile_id, service_type, ingredient_model, offers_pickup, offers_cook_delivery, offers_platform_delivery, title, description, photo_url, price_cents, quantity_available, is_published, is_available_now, available_until, current_offer_note, updated_at, cook_profiles!inner(display_name, city, is_active)'
     )
     .eq('is_published', true)
     .order('updated_at', { ascending: false });

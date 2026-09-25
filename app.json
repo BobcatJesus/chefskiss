@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Chefskiss",
-    "slug": "chefskiss",
+    "name": "Too Many Cooks",
+    "slug": "toomanycooks",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "chefskiss",
+    "scheme": "toomanycooks",
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true

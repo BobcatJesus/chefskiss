@@ -4,7 +4,7 @@ import * as ExpoLinking from 'expo-linking';
 import { Link, useFocusEffect, useRouter } from 'expo-router';
 import { FlatList, Image, Platform, Pressable, Share, StyleSheet, Text, View } from 'react-native';
 
-import { listOwnMeals, setMealPublished, type MealRecord } from '@/features/meals/api';
+import { listOwnMeals, setMealAvailableNow, setMealPublished, type MealRecord } from '@/features/meals/api';
 import { ensureCookProfile, getCookProfileById } from '@/features/profiles/api';
 
 export default function CookMealsScreen() {
@@ -12,6 +12,7 @@ export default function CookMealsScreen() {
   const [meals, setMeals] = useState<MealRecord[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isTogglingId, setIsTogglingId] = useState<string | null>(null);
+  const [isTogglingNowId, setIsTogglingNowId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [cookProfileId, setCookProfileId] = useState<string | null>(null);
@@ -58,6 +59,20 @@ export default function CookMealsScreen() {
       setErrorMessage(error instanceof Error ? error.message : 'Unable to update publish status.');
     } finally {
       setIsTogglingId(null);
+    }
+  }
+
+  async function handleToggleAvailableNow(meal: MealRecord) {
+    try {
+      setErrorMessage(null);
+      setIsTogglingNowId(meal.id);
+      await setMealAvailableNow(meal.id, !meal.is_available_now);
+      setMeals((current) => current.map((item) => item.id === meal.id ? { ...item, is_available_now: !meal.is_available_now, available_until: null } : item));
+      setSuccessMessage(!meal.is_available_now ? 'Added to Making Now.' : 'Removed from Making Now.');
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : 'Unable to update current availability.');
+    } finally {
+      setIsTogglingNowId(null);
     }
   }
 
@@ -174,6 +189,16 @@ export default function CookMealsScreen() {
                 {isTogglingId === item.id ? 'Updating...' : item.is_published ? 'Hide from menu' : 'Publish to menu'}
               </Text>
             </Pressable>
+
+            <Pressable
+              disabled={isTogglingNowId === item.id}
+              onPress={() => void handleToggleAvailableNow(item)}
+              style={[styles.nowButton, item.is_available_now ? styles.nowButtonActive : null]}
+            >
+              <Text style={styles.nowButtonLabel}>
+                {isTogglingNowId === item.id ? 'Updating...' : item.is_available_now ? 'Making now' : 'Add to Making Now'}
+              </Text>
+            </Pressable>
           </View>
         )}
       />
@@ -247,5 +272,22 @@ const styles = StyleSheet.create({
   publishButtonLabel: {
     color: '#111827',
     fontWeight: '700',
+  },
+  nowButton: {
+    marginTop: 8,
+    borderWidth: 1,
+    borderColor: '#0f766e',
+    borderRadius: 8,
+    alignItems: 'center',
+    paddingVertical: 8,
+    backgroundColor: '#f0fdfa',
+  },
+  nowButtonActive: {
+    borderColor: '#c2410c',
+    backgroundColor: '#fff7ed',
+  },
+  nowButtonLabel: {
+    color: '#115e59',
+    fontWeight: '800',
   },
 });
